@@ -22,3 +22,6 @@ use App\Http\Controllers\Controller_RumahSakit;
 
 Route::get('/rumahsakit', [Controller_RumahSakit::class, 'Index']);
 Route::post('/create', [Controller_RumahSakit::class, 'Create']);
+Route::get('/edit/{id}', [Controller_RumahSakit::class, 'FetchID']);
+Route::put('/update/{id}', [Controller_RumahSakit::class, 'Update']);
+Route::get('/delete/{id}', [Controller_RumahSakit::class, 'Delete']);

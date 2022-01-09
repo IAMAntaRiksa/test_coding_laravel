@@ -25,10 +25,49 @@ class Controller_RumahSakit extends Controller
                 'no_tlpn_rs' => $data['no_tlpn_rs'],
             ]
         );
-        if ($action != null) {
-            print('data berhasil');
+        if ($action) {
+            return redirect()->back()->with(['success' => 'success']);
         } else {
-            print('gagal');
+            return 'Insert gagal';
+        }
+    }
+
+    public function FetchID($id)
+    {
+        $getPerID = DB::table('rumah_sakits')->where('id', $id)->first();
+        // handel
+        $data = DB::table(table: 'rumah_sakits')->get();
+
+        return view('dashboard', compact('data', 'getPerID'));
+    }
+
+    public function Update(Request $request, $id)
+    {
+        $data = $request->all();
+        $action = DB::table('rumah_sakits')->where('id', $id)->update(
+            [
+                'nama_rs' => $data['nama_rs'],
+                'alamat_rs' => $data['alamat_rs'],
+                'deskripsi_rs' => $data['deskripsi_rs'],
+                'no_tlpn_rs' => $data['no_tlpn_rs'],
+            ]
+        );
+
+        if ($action) {
+            return redirect()->back()->with(['success' => 'Berhasil Edit Data']);
+        } else {
+            return 'Insert gagal';
+        }
+    }
+
+
+    public function Delete($id)
+    {
+        $delete = DB::table('rumah_sakits')->where('id', $id)->delete();
+        if ($delete) {
+            return redirect()->back()->with(['success' => 'Berhasil delete']);
+        } else {
+            return 'Insert gagal';
         }
     }
 }

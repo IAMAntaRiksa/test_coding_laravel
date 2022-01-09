@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,23 +9,39 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
-<body>
+<body>  
     <div class="container mt-5">
-        <div class="row">
+        <div class="Column">
             <div class="col-md-12">
+                <div class="card border-1 shadow rounded">
+                    <div class="card-body">
+                         @if (session('success'))
+                            <div class="alert alert-success">
+                                 {{ session('success') }}
+                            </div>
+                         @endif   
+                        <form action="{{isset($getPerID) ? url('/update', $getPerID->id) :url('/create')}}" method="POST"> 
+                            @csrf
+                            {{isset($getPerID) ? method_field('PUT') : ''}}
+                            <div class="form-group">                   
+                                <input type="text" value="{{isset($getPerID) ? $getPerID->nama_rs : ''}}" name="nama_rs" placeholder="Nama Rs" required>
+                            </div>
+                            <div class="form-group">                           
+                                <input type="text" value="{{isset($getPerID) ? $getPerID->alamat_rs : ''}}" name="alamat_rs" placeholder="Alamat Rs" required>
+                            </div>
+                            <div class="form-group">                     
+                                <input type="text" value="{{isset($getPerID) ? $getPerID->deskripsi_rs : ''}}" name="deskripsi_rs" placeholder="Deskripsi Rs" required>
+                            </div>
 
-                <!-- Notifikasi menggunakan flash session data -->
-                {{-- @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
+                            <div class="form-group">
+                                <input type="text" value="{{isset($getPerID) ? $getPerID->no_tlpn_rs : ''}}" name="no_tlpn_rs" placeholder="No tlpn Rs" required>
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-md btn-primary" >{{isset($getPerID) ? 'Edit Data' : 'Inser Data'}}</button>
+                            </div>  
+                        </form>
+                    </div>
                 </div>
-                @endif
-
-                @if (session('error'))
-                <div class="alert alert-error">
-                    {{ session('error') }}
-                </div>
-                @endif --}}
 
                 <div class="card border-0 shadow rounded">
                     <div class="card-body">
@@ -49,11 +64,10 @@
                                         <td>{{ $item->no_tlpn_rs }}</td>
                                         <td class="text-center">
                                         <form onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                            action="#" method="POST">
-                                            <a href="#"
+                                            action="{{url('/delete', $item->id)}}" method="#">
+                                            <a href="{{url('/edit', $item->id)}}"
                                                 class="btn btn-sm btn-primary">EDIT</a>
-                                            @csrf
-                                            @method('DELETE')
+                                           
                                             <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
                                         </form>
                                     </td> 
